@@ -137,36 +137,47 @@ function getRandomFloat(from = 1000, to = 0, countNum = 3) {
 }
 
 function getRandomLocation(x, y) {
-  let startInt,
-    startFloat,
-    endInt,
-    endFloat,
-    floatCount,
-    result;
-  String(x).split(".").forEach(function (item, index) {
-    if (index === 0) {
-      startInt = parseInt(item);
-    } else {
-      startFloat = item;
+  try {
+    if (typeof x !== "string" || typeof y !== "string") {
+      throw new Error("Ошибка типа данных, данны должны быть типа  'string' ")
     }
-  })
+    let startInt,
+      startFloat,
+      endInt,
+      endFloat,
+      floatCount,
+      result;
+    String(x).split(".").forEach(function (item, index) {
+      if (index === 0) {
+        startInt = parseInt(item);
+      } else {
+        startFloat = item;
+      }
+    })
 
-  String(y).split(".").forEach(function (item, index) {
-    if (index === 0) {
-      endInt = parseInt(item);
-    } else {
-      endFloat = item;
-    }
-  })
-floatCount = Math.max(startFloat.length, endFloat.length);
+    String(y).split(".").forEach(function (item, index) {
+      if (index === 0) {
+        endInt = parseInt(item);
+      } else {
+        endFloat = item;
+      }
+    })
 
-  if (endInt > startInt) {
+    floatCount = Math.max(startFloat.length, endFloat.length);
+
+
     result = getRandomNum(startInt, endInt);
-    if(result === endInt){
-      result = String(result)getRandomFloat(0,1,floatCount)
+    if (result === endInt) {
+      result += "." + getRandomNum(Number(startFloat), Number(endFloat));
+    } else {
+      result += "." + getRandomNum(10 ** floatCount - 1);
     }
+
+    return Number(result);
+  } catch (err) {
+    console.log(err)
+    return false;
   }
-  return result;
 }
 
 function defineStringLength(str, charCount) {
@@ -227,15 +238,21 @@ function randomCountFromArray(arr, count) {
   return result;
 }
 
+
+
 function getAddInfo() {
-  return {
+  let obj = {
     author: {
       avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10), prefix = 0) + ".png",
+    },
+    location: {
+      lat: getRandomLocation("35.65000", "35.70000"),
+      lng: getRandomLocation("139.70000", "139.80000"),
     },
     offer: {
       title: selectFromArray(TITLES),
       address: null,
-      price: getRandomNum(),
+      price: getRandomNum(5000, 25000),
       rooms: getRandomNum(1, 5),
       guests: getRandomNum(1, 10),
       checkin: selectFromArray(RESIDENCE),
@@ -244,11 +261,27 @@ function getAddInfo() {
       description: selectFromArray(DESCRIPTIONS),
       photos: randomCountFromArray(PHOTOS, getRandomNum(0, PHOTOS.length - 1)),
     },
-    location: {
-      lat: getRandomFloat(),
-      lng: getRandomFloat(),
+    getlocation: function () {
+      return `${this.location.lat}, ${this.location.lng}`;
     }
+  }
+
+  return obj;
+}
+
+function getObjects(callBack, length = 25) {
+  try {
+    if (callBack === undefined) {
+      throw new Error("Необхлдимо добавить функцию конструткор")
+    }
+    if (typeof length === "object" || Number(length) !== Number(length) || Number(length) === 0) {
+      throw new Error("Ошибка ввода данных, должно быть число не меньше 1")
+    }
+    return Array.from({ length: length }, callBack);
+  } catch (err) {
+    console.log(err)
   }
 }
 
 console.log("код в норме")
+
