@@ -243,7 +243,7 @@ function randomCountFromArray(arr, count) {
 function getAddInfo() {
   let obj = {
     author: {
-      avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10), prefix = 0) + ".png",
+      avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10)) + ".png",
     },
     location: {
       lat: getRandomLocation("35.65000", "35.70000"),
