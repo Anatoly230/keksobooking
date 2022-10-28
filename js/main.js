@@ -310,5 +310,28 @@ function getObjects(callBack, length = 25) {
   }
 }
 
+function checkModule() {
+  try {
+      console.log(`${testModul} подключена из соседнего модуля`);
+  } catch (err) {
+    if (err.name === "ReferenceError") {
+      console.log("testModul не видна");
+    }
+  }
+}
+
+checkModule();
+
+function User(name) {
+
+  // методом объекта становится вложенная функция
+  this.sayHi = function() {
+    alert(name);
+  };
+}
+
+let user = new User("John");
+
+
 console.log("код в норме")
 
