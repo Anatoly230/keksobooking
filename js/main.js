@@ -1,3 +1,5 @@
+import "./utils.js";
+
 const TITLES = ["НОВИНКА!",
   "СЛУЧИЛОСЬ НЕВЕРОЯТНОЕ!",
   "ТАКОГО ЕЩЕ НЕ БЫЛО!",
@@ -91,38 +93,6 @@ const TITLES = ["НОВИНКА!",
     "https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg"],
   LOCATIONS = generateLocation();
 
-
-
-function getValueOfArguments(from, to) {
-  if (typeof from !== "number") {
-    return false;
-  }
-  if (from < 0) {
-    from = Math.abs(from);
-  }
-  if (from > to) {
-    [from, to] = [to, from];
-  }
-
-  return {
-    from: from,
-    to: to
-  }
-}
-
-function getRandomNum(from = 1000, to = 0) {
-  try {
-    let range = getValueOfArguments(from, to);
-    from = range.from,
-      to = range.to;
-    range = null;
-    return Math.floor(Math.random() * (to - from + 1)) + from;
-  } catch (err) {
-    console.log(err)
-    return false;
-  }
-
-}
 
 function getRandomFloat(from = 1000, to = 0, countNum = 3) {
   try {
@@ -312,7 +282,7 @@ function getObjects(callBack, length = 25) {
 
 function checkModule() {
   try {
-      console.log(`${testModul} подключена из соседнего модуля`);
+    console.log(`${testModul} подключена из соседнего модуля`);
   } catch (err) {
     if (err.name === "ReferenceError") {
       console.log("testModul не видна");
@@ -321,17 +291,6 @@ function checkModule() {
 }
 
 checkModule();
-
-function User(name) {
-
-  // методом объекта становится вложенная функция
-  this.sayHi = function() {
-    alert(name);
-  };
-}
-
-let user = new User("John");
-
 
 console.log("код в норме")
 

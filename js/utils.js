@@ -1,35 +1,36 @@
 let testModul = "test - module";
+function getValueOfArguments(from, to) {
+  if (typeof from !== "number") {
+    return false;
+  }
+  if (from < 0) {
+    from = Math.abs(from);
+  }
+  if (from > to) {
+    [from, to] = [to, from];
+  }
+
+  return {
+    from: from,
+    to: to
+  }
+}
+
+function getRandomNum(from = 1000, to = 0) {
+  try {
+    let range = getValueOfArguments(from, to);
+    from = range.from,
+      to = range.to;
+    range = null;
+    return Math.floor(Math.random() * (to - from + 1)) + from;
+  } catch (err) {
+    console.log(err)
+    return false;
+  }
+
+}
+
 console.log("файл utils.js  обрабатывается ")
 
-function makeWorker(name) {
 
-
-  // let lexicalEnvironment = {
-  //   "Environment Record": {
-  //     name: "Pete",
-  //     surname: "Shishkin",
-  //     this: window,
-  //   },
-  //   "Outer Lexical Environment": window.lexicalEnvironment["Environment Record"]
-  // }
-  return function () {
-    console.log("Это " + name);
-  };
-}
-
-
-// create a function
-let work = makeWorker();
-
-// call it
-work()
-
-function User(name) {
-
-  // методом объекта становится вложенная функция
-  this.sayHi = function() {
-    alert(name);
-  };
-}
-
-let user = new User("John");
+export {testModul, getValueOfArguments, getRandomNum};
