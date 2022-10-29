@@ -238,31 +238,31 @@ function randomCountFromArray(arr, count) {
     return result;
 }
 
-function getAddInfo() {
-    let locations = getRandomLocation("35.65000", "35.70000")+","+getRandomLocation("139.70000", "139.80000");
+// function getAddInfo() {
+//     let locations = getRandomLocation("35.65000", "35.70000") + "," + getRandomLocation("139.70000", "139.80000");
 
-    return  {
-        author: {
-            avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10), prefix = 0) + ".png",
-        },
-        location: {
-            lat: locations.split(",")[0],
-            lng:  locations.split(",")[1],
-        },
-        offer: {
-            title: selectFromArray(TITLES),
-            address: locations,
-            price: getRandomNum(5000, 25000),
-            rooms: getRandomNum(1, 5),
-            guests: getRandomNum(1, 10),
-            checkin: selectFromArray(RESIDENCE),
-            checkout: selectFromArray(RESIDENCE),
-            features: randomCountFromArray(FEATURES, getRandomNum(0, FEATURES.length - 1)),
-            description: selectFromArray(DESCRIPTIONS),
-            photos: randomCountFromArray(PHOTOS, getRandomNum(0, PHOTOS.length - 1)),
-        },
-    };
-}
+//     return {
+//         author: {
+//             avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10), prefix = 0) + ".png",
+//         },
+//         location: {
+//             lat: locations.split(",")[0],
+//             lng: locations.split(",")[1],
+//         },
+//         offer: {
+//             title: selectFromArray(TITLES),
+//             address: locations,
+//             price: getRandomNum(5000, 25000),
+//             rooms: getRandomNum(1, 5),
+//             guests: getRandomNum(1, 10),
+//             checkin: selectFromArray(RESIDENCE),
+//             checkout: selectFromArray(RESIDENCE),
+//             features: randomCountFromArray(FEATURES, getRandomNum(0, FEATURES.length - 1)),
+//             description: selectFromArray(DESCRIPTIONS),
+//             photos: randomCountFromArray(PHOTOS, getRandomNum(0, PHOTOS.length - 1)),
+//         },
+//     };
+// }
 
 function getObjects(callBack, length = 25) {
     try {
@@ -277,6 +277,35 @@ function getObjects(callBack, length = 25) {
         console.log(err)
     }
 }
+
+function getAddInfo() {
+    // let locations = getRandomLocation("35.65000", "35.70000") + "," + getRandomLocation("139.70000", "139.80000");
+
+    return {
+        author: {
+            avatar: "img/avatars/user" + addPrefix(getRandomNum(1, 10), prefix = 0) + ".png",
+        },
+        location: {
+            lat: getRandomLocation("35.65000", "35.70000"),
+            lng: getRandomLocation("139.70000", "139.80000"),
+        },
+        offer: {
+            title: selectFromArray(TITLES),
+            address: (function () {
+                return this.location;
+            })(),
+            price: getRandomNum(5000, 25000),
+            rooms: getRandomNum(1, 5),
+            guests: getRandomNum(1, 10),
+            checkin: selectFromArray(RESIDENCE),
+            checkout: selectFromArray(RESIDENCE),
+            features: randomCountFromArray(FEATURES, getRandomNum(0, FEATURES.length - 1)),
+            description: selectFromArray(DESCRIPTIONS),
+            photos: randomCountFromArray(PHOTOS, getRandomNum(0, PHOTOS.length - 1)),
+        },
+    };
+}
+
 
 console.log("код в норме")
 
