@@ -166,6 +166,7 @@ function getLocation() {
 function getOffer() {
   return {
     title: selectFromArray(TITLES),
+    type: selectFromArray(TYPES),
     address: LOCATIONS.address,
     price: getRandomNum(5000, 25000),
     rooms: getRandomNum(1, 5),
