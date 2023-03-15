@@ -69,4 +69,6 @@ function activateInputs(elements) {
   disableElements(elements, false);
 }
 
+deactivateInputs(buch);
+
 export {deactivateInputs, activateInputs, buch};
