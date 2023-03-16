@@ -2,44 +2,49 @@ import { getAddInfo } from "./data.js";
 import { getRandomNum } from "./utils.js";
 
 function getFeatureList(featuresList) {
-    featuresList.forEach(function (item) {
-        let isСoincided = rawFeatures.some(function (featureItem) {
-            return item.classList.contains(featureItem)
-        })
-        if (!isСoincided) {
-            item.remove();
-        }
+  featuresList.forEach(function (item) {
+    let isСoincided = rawFeatures.some(function (featureItem) {
+      return item.classList.contains(featureItem)
     })
-}
-
-function addImage(images) {
-
-    if (images.length > 1) {
-        let image = imageTemlate.coneNode(true);
+    if (!isСoincided) {
+      item.remove();
     }
+  })
 }
 
+function addImages(imagePaths){
+  const imageHome = child.querySelector(".popup__photos");
+  const imageTemplate = imageHome.querySelector(".popup__photo").cloneNode(true);
+  const tempImagePlace = document.createDocumentFragment();
+  imageHome.querySelector(".popup__photo").remove();
+  let imageChild;
 
-const typeTranslate = {
-    flat: "Квартира",
-    bungalow: "Бунгало",
-    house: "Дом",
-    palace: "Дворец",
-    hotel: "Отель",
+  for (let path of imagePaths) {
+   imageChild = imageTemplate.cloneNode(true);
+    imageChild.src = path;
+    tempImagePlace.appendChild(imageChild);
+  }
+
+  imageHome.appendChild(tempImagePlace)
 }
+
 
 const template = document.querySelector("#card").content.querySelector(".popup");
 const home = document.querySelector("#map-canvas");
 const child = template.cloneNode(true);
 const offerFeatures = child.querySelectorAll(".popup__feature");
 const rawData = getAddInfo();
-
-const imageTemlate = child.querySelector(".popup__photo");
-
 const blockName = "popup__feature--"
 const rawFeatures = rawData.offer.features.map(function (item) {
-    return blockName + item;
+  return blockName + item;
 })
+const typeTranslate = {
+  flat: "Квартира",
+  bungalow: "Бунгало",
+  house: "Дом",
+  palace: "Дворец",
+  hotel: "Отель",
+}
 
 
 
@@ -56,16 +61,10 @@ child.querySelector(".popup__avatar").src = rawData.author.avatar;
 getFeatureList(offerFeatures)
 
 console.log(rawData);
-console.log(child.querySelector(".popup__photos"));
 
-if (rawData.offer.photos.length === 1) {
-    console.log("Всего одно изображение")
-} else {
-    console.log(`изображений больше, их ${rawData.offer.photos.length}`)
-}
-
-// console.log(imageTemlate);
+console.log(child.querySelector(".popup__photo"));
+console.log(imageTemlate);
 
 home.appendChild(child);
 
-export { template };
+export { renderData };
