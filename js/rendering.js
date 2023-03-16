@@ -13,9 +13,9 @@ function getFeatureList(featuresList) {
 }
 
 function addImage(images) {
-    
+
     if (images.length > 1) {
-let image = imageTemlate.coneNode(true); 
+        let image = imageTemlate.coneNode(true);
     }
 }
 
@@ -56,9 +56,15 @@ child.querySelector(".popup__avatar").src = rawData.author.avatar;
 getFeatureList(offerFeatures)
 
 console.log(rawData);
+console.log(child.querySelector(".popup__photos"));
 
-console.log(child.querySelector(".popup__photo"));
-console.log(imageTemlate);
+if (rawData.offer.photos.length === 1) {
+    console.log("Всего одно изображение")
+} else {
+    console.log(`изображений больше, их ${rawData.offer.photos.length}`)
+}
+
+// console.log(imageTemlate);
 
 home.appendChild(child);
 
