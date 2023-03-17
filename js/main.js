@@ -6,7 +6,7 @@ import { map } from "./map.js"
 
 console.log("код в норме")
 
-// renderData();
+renderData();
 
 
 
