@@ -1,9 +1,22 @@
-import { getAddInfo } from "./data.js";
-import { getRandomNum } from "./utils.js";
+import { raw } from "./data.js";
 
-function getFeatureList(featuresList) {
-  featuresList.forEach(function (item) {
-    let isСoincided = rawFeatures.some(function (featureItem) {
+
+// setOfferFeatures instance start
+// function setOfferFeatures(featuresList) {
+//   featuresList.forEach(function (item) {
+//     let isСoincided = rawFeatures.some(function (featureItem) {
+//       return item.classList.contains(featureItem)
+//     })
+//     if (!isСoincided) {
+//       item.remove();
+//     }
+//   })
+// }
+
+function setOfferFeatures(templateFeatures, rawFeatures) {
+  let offerFeatures = getOfferFeatures(rawFeatures);
+  templateFeatures.forEach(function (item) {
+    let isСoincided = offerFeatures.some(function (featureItem) {
       return item.classList.contains(featureItem)
     })
     if (!isСoincided) {
@@ -11,8 +24,16 @@ function getFeatureList(featuresList) {
     }
   })
 }
+// setOfferFeatures instance end
 
-function addImages(imagePaths){
+function getOfferFeatures(dataItem) {
+  return dataItem.offer.features.map(function (item) {
+    return blockName + item;
+  })
+}
+
+
+function addImages(imagePaths) {
   const imageHome = child.querySelector(".popup__photos");
   const imageTemplate = imageHome.querySelector(".popup__photo").cloneNode(true);
   const tempImagePlace = document.createDocumentFragment();
@@ -20,7 +41,7 @@ function addImages(imagePaths){
   let imageChild;
 
   for (let path of imagePaths) {
-   imageChild = imageTemplate.cloneNode(true);
+    imageChild = imageTemplate.cloneNode(true);
     imageChild.src = path;
     tempImagePlace.appendChild(imageChild);
   }
@@ -28,16 +49,12 @@ function addImages(imagePaths){
   imageHome.appendChild(tempImagePlace)
 }
 
-
 const template = document.querySelector("#card").content.querySelector(".popup");
 const home = document.querySelector("#map-canvas");
 const child = template.cloneNode(true);
-const offerFeatures = child.querySelectorAll(".popup__feature");
-const rawData = getAddInfo();
-const blockName = "popup__feature--"
-const rawFeatures = rawData.offer.features.map(function (item) {
-  return blockName + item;
-})
+const blockName = "popup__feature--";
+
+
 const typeTranslate = {
   flat: "Квартира",
   bungalow: "Бунгало",
@@ -46,25 +63,35 @@ const typeTranslate = {
   hotel: "Отель",
 }
 
+function getAddings(data) {
+  const fragment = new DocumentFragment();
+
+  data.forEach(function (item) {
+    fragment.append(renderData(item))
+  })
+  return fragment;
+}
 
 
-child.querySelector(".popup__title").textContent = rawData.offer.title;
-child.querySelector(".popup__text--price").childNodes[0].textContent = rawData.offer.price + " ";
-child.querySelector(".popup__type").textContent = typeTranslate[rawData.offer.type];
-child.querySelector(".popup__text--capacity").textContent = `${rawData.offer.rooms} комнат для ${rawData.offer.guests} гостей`;
-child.querySelector(".popup__text--time").textContent = `Заезд после ${rawData.offer.checkin}, выезд до ${rawData.offer.checkout}`;
-child.querySelector(".popup__description").textContent = rawData.offer.description;
-// child.querySelector(".popup__photo").src = rawData.offer.photos;
-child.querySelector(".popup__avatar").src = rawData.author.avatar;
+function renderData(dataItem) {
+  const addItem = template.cloneNode(true);
+  const offerFeatures = addItem.querySelectorAll(".popup__feature");
+  setOfferFeatures(offerFeatures, dataItem);
+  addImages(dataItem.offer.photos)
+  addItem.querySelector(".popup__title").textContent = dataItem.offer.title;
+  addItem.querySelector(".popup__text--price").childNodes[0].textContent = dataItem.offer.price + " ";
+  addItem.querySelector(".popup__type").textContent = typeTranslate[dataItem.offer.type];
+  addItem.querySelector(".popup__text--capacity").textContent = `${dataItem.offer.rooms} комнат для ${dataItem.offer.guests} гостей`;
+  addItem.querySelector(".popup__text--time").textContent = `Заезд после ${dataItem.offer.checkin}, выезд до ${dataItem.offer.checkout}`;
+  addItem.querySelector(".popup__description").textContent = dataItem.offer.description;
+  addItem.querySelector(".popup__avatar").src = dataItem.author.avatar;
+  addItem.querySelector(".popup__avatar").src = dataItem.author.avatar;
+  return addItem;
+}
+
+function renderAddings(){
+  home.appendChild(getAddings(raw));
+}
 
 
-getFeatureList(offerFeatures)
-
-console.log(rawData);
-
-console.log(child.querySelector(".popup__photo"));
-console.log(imageTemlate);
-
-home.appendChild(child);
-
-export { renderData };
+export { renderAddings };

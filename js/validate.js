@@ -1,5 +1,6 @@
 import { activateInputs, buch } from "./activate.js";
 import { slider, changeEnd, changeStart, changeRange } from "./slider-generator.js";
+import { getMarkerCoords, marker } from "./map.js";
 
 const messagesRu = {
     required: "Это поле обязательное",
@@ -28,7 +29,7 @@ Pristine.addMessages('ru', messagesRu);
 Pristine.setLocale('ru');
 
 const form = document.querySelector('.ad-form'),
-    title = form.querySelector('#title'),
+    address = form.querySelector('#address'),
     price = form.querySelector('#price'),
     rooms = form.querySelector('#room_number'),
     capacity = form.querySelector('#capacity'),
@@ -136,12 +137,14 @@ function setCheckInCheckOut(sourceElement, targetElement) {
 }
 
 timein.addEventListener('change', function () {
-    setCheckInCheckOut(this,timeout);
+    setCheckInCheckOut(this, timeout);
 })
 
 timeout.addEventListener('change', function () {
     setCheckInCheckOut(this, timein);
 })
+
+getMarkerCoords(address, marker);
 
 changeRange(price.max, price.min);
 window.addEventListener('load', startForm)

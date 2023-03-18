@@ -1,4 +1,4 @@
-import { selectFromArray, getRandomNum, randomCountFromArray, addPrefix } from "./utils.js";
+import { selectFromArray, getRandomNum, randomCountFromArray, addPrefix, getObjects } from "./utils.js";
 
 const TITLES = ["НОВИНКА!",
   "СЛУЧИЛОСЬ НЕВЕРОЯТНОЕ!",
@@ -192,4 +192,8 @@ function getAddInfo() {
     offer: getOffer(),
   };
 }
-export { getAddInfo };
+
+let raw = getObjects(getAddInfo, 10);
+
+
+export { raw };
