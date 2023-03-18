@@ -3,8 +3,9 @@ const map = L.map('map-canvas', {
 })
     // .setView([55.889613, 37.638809], 15),
     .setView({
-        lat: 55.889613,
-        lng: 37.638809,
+        // 35.681721, 139.753931
+        lat: 35.681721,
+        lng: 139.753931,
 
     }, 15),
     tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -19,8 +20,8 @@ const map = L.map('map-canvas', {
     }),
     marker = L.marker(
         {
-            lat: 55.889613,
-            lng: 37.638809
+            lat: 35.681721,
+            lng: 139.753931,
         },
         {
             draggable: true,

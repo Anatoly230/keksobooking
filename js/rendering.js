@@ -52,6 +52,7 @@ function addImages(imagePaths) {
 const template = document.querySelector("#card").content.querySelector(".popup");
 const home = document.querySelector("#map-canvas");
 const child = template.cloneNode(true);
+console.log(child);
 const blockName = "popup__feature--";
 
 
@@ -78,8 +79,10 @@ function renderData(dataItem) {
   const offerFeatures = addItem.querySelectorAll(".popup__feature");
   setOfferFeatures(offerFeatures, dataItem);
   addImages(dataItem.offer.photos)
+  console.log( addItem.querySelector(".popup__text--price"),dataItem.offer.price)
+  addItem.querySelector(".popup__text--address").textContent = dataItem.offer.address;
   addItem.querySelector(".popup__title").textContent = dataItem.offer.title;
-  addItem.querySelector(".popup__text--price").childNodes[0].textContent = dataItem.offer.price + " ";
+  addItem.querySelector(".popup__text--price").textContent = dataItem.offer.price + " ";
   addItem.querySelector(".popup__type").textContent = typeTranslate[dataItem.offer.type];
   addItem.querySelector(".popup__text--capacity").textContent = `${dataItem.offer.rooms} комнат для ${dataItem.offer.guests} гостей`;
   addItem.querySelector(".popup__text--time").textContent = `Заезд после ${dataItem.offer.checkin}, выезд до ${dataItem.offer.checkout}`;
@@ -89,7 +92,7 @@ function renderData(dataItem) {
   return addItem;
 }
 
-function renderAddings(){
+function renderAddings() {
   home.appendChild(getAddings(raw));
 }
 

@@ -194,6 +194,7 @@ function getAddInfo() {
 }
 
 let raw = getObjects(getAddInfo, 10);
+console.log(raw);
 
 
 export { raw };
